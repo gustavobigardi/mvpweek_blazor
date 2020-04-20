@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVPWeek.Server", "Server\MV
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVPWeek.Client", "Client\MVPWeek.Client.csproj", "{FC11C82A-E51B-447D-9113-EA8A9078C3AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVPWeek.Shared", "Shared\MVPWeek.Shared.csproj", "{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,18 +40,6 @@ Global
 		{68ABD2EC-610D-4DF8-A6CB-27AE34794BE2}.Release|x64.Build.0 = Release|Any CPU
 		{68ABD2EC-610D-4DF8-A6CB-27AE34794BE2}.Release|x86.ActiveCfg = Release|Any CPU
 		{68ABD2EC-610D-4DF8-A6CB-27AE34794BE2}.Release|x86.Build.0 = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|x64.Build.0 = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Debug|x86.Build.0 = Debug|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|x64.ActiveCfg = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|x64.Build.0 = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|x86.ActiveCfg = Release|Any CPU
-		{A2108BD5-9947-469C-9AA6-4F006A1F6A0D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
