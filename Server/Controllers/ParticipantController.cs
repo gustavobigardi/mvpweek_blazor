@@ -34,7 +34,7 @@ namespace MVPWeek.Server.Controllers
         {
             if (_context.Participants.Any(p => p.Email.Equals(participant.Email)))
             {
-                ModelState.AddModelError("Email", "This email is already registered!");
+                ModelState.AddModelError("Email", "Email já registrado!");
                 return _apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
             }
 
@@ -49,7 +49,7 @@ namespace MVPWeek.Server.Controllers
         {
             if (!raffle.Password.Equals(configuration.GetValue<string>("RafflePassword")))
             {
-                ModelState.AddModelError("Password", "Wrong password for raffle!");
+                ModelState.AddModelError("Password", "Senha incorreta!");
                 return _apiBehaviorOptions.Value.InvalidModelStateResponseFactory(ControllerContext);
             }   
 

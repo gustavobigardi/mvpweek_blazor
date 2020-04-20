@@ -11,5 +11,6 @@ namespace MVPWeek.Client.Models
     public class Error
     {
         public string[] Password { get; set; }
+        public string[] Email { get; set; }
     }
 }

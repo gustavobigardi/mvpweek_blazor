@@ -14,10 +14,10 @@
     </div>
 }
 
-@if(!string.IsNullOrWhiteSpace(failure))
+@if(failure != null && failure.Errors != null)
 {
     <div class="alert alert-danger" role="alert">
-        @failure
+        @string.Join("<br/>", failure.Errors.Email)
     </div>
 }
 
@@ -43,7 +43,7 @@
 @code {
     private Participant participant { get; set; } = new Participant();
     private bool success { get; set; }
-    private string failure { get; set; }
+    private ErrorResult failure { get; set; } = new ErrorResult();
     private string displayLoaderStyle { get; set; } = "display: none;";
 
     private async Task HandleValidSubmit()
@@ -52,7 +52,7 @@
         this.StateHasChanged();
         var response = await httpClient.PostAsJsonAsync<Participant>("participant/add", participant);
         success = response.IsSuccessStatusCode;
-        failure = !success ? (await response.Content.ReadAsStringAsync()) : "";
+        failure = !response.IsSuccessStatusCode ? (await response.Content.ReadFromJsonAsync<ErrorResult>()) : new ErrorResult();
 
         if (success)
         {
