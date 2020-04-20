@@ -1,7 +1,65 @@
-﻿@page "/"
+@using MVPWeek.Client.Models;
+@inject HttpClient httpClient;
+@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Bem-vindo ao cadastro para sorteio!</h1>
 
-Welcome to your new app.
+<p>Esta é uma aplicação de demonstração sobre Blazor utilizada no MVP Week 2020. Será sorteado um voucher do treinamento Azure na Prática Online.</p>
+<p>Para mais detalhes, acesse: <a href="https://azurenapratica.com/" target="_blank">Azure na Prática</a></p>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if(success)
+{
+    <div class="alert alert-success" role="alert">
+        Cadastro realizado com sucesso!
+    </div>
+}
+
+@if(!string.IsNullOrWhiteSpace(failure))
+{
+    <div class="alert alert-danger" role="alert">
+        @failure
+    </div>
+}
+
+<p>
+    <EditForm Model="@participant" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <label for="name">Nome: </label>
+        <InputText id="name" @bind-Value="participant.Name" />
+        <br/><br/>
+        <label for="email">Email: </label>
+        <InputText id="email" type="email" @bind-Value="participant.Email" />
+        <br/><br/>
+        <button type="submit">Cadastrar</button>
+    </EditForm>
+</p>
+
+<div style="@displayLoaderStyle z-index: 9999; background-color: rgb(255, 255, 255); position: fixed; top: 0; left: 0; right: 0; bottom: 0">
+    <img src="https://www.lojimax.com.tr/app/themes/classic/assets/images/loader.gif" style="position: fixed; top: 50%; left: 50%; margin-top: -145px; margin-left: -220px;" />
+</div>
+
+@code {
+    private Participant participant { get; set; } = new Participant();
+    private bool success { get; set; }
+    private string failure { get; set; }
+    private string displayLoaderStyle { get; set; } = "display: none;";
+
+    private async Task HandleValidSubmit()
+    {
+        displayLoaderStyle = "display: block;";
+        this.StateHasChanged();
+        var response = await httpClient.PostAsJsonAsync<Participant>("participant/add", participant);
+        success = response.IsSuccessStatusCode;
+        failure = !success ? (await response.Content.ReadAsStringAsync()) : "";
+
+        if (success)
+        {
+            participant = new Participant();
+        }
+        
+        displayLoaderStyle = "display: none;";
+        this.StateHasChanged();
+    }
+}

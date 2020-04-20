@@ -1,0 +1,73 @@
+﻿@using System.Net;
+@using MVPWeek.Client.Models;
+@inject HttpClient httpClient;
+@page "/raffle"
+
+<h1>Bem-vindo ao sorteio!</h1>
+
+@if(!string.IsNullOrWhiteSpace(selected.Name))
+{
+    <div class="alert alert-success" role="alert">
+        Sorteado: @(selected.Name + "(" + selected.Id + ")")
+    </div>
+}
+
+@if(failure != null && failure.Errors != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @string.Join("<br/>", failure.Errors.Password)
+    </div>
+}
+
+<p>
+    <EditForm Model="@raffle" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <label for="password">Senha para sorteio</label><br/>
+        <InputText id="password" type="password" @bind-Value="raffle.Password" />
+
+        <button type="submit">Sortear</button>
+    </EditForm>
+</p>
+
+<div style="@displayLoaderStyle z-index: 9999; background-color: rgb(255, 255, 255); position: fixed; top: 0; left: 0; right: 0; bottom: 0">
+    <img src="https://www.lojimax.com.tr/app/themes/classic/assets/images/loader.gif" style="position: fixed; top: 50%; left: 50%; margin-top: -145px; margin-left: -220px;" />
+</div>
+
+@code {
+    private Models.Raffle raffle { get; set; } = new Models.Raffle();
+    private Participant selected { get; set; } = new Participant();
+    private ErrorResult failure { get; set; } = new ErrorResult();
+    private string displayLoaderStyle { get; set; } = "display: none;";
+
+    private async Task HandleValidSubmit()
+    {
+        displayLoaderStyle = "display: block;";
+        this.StateHasChanged();
+
+        selected = new Participant();
+        failure = new ErrorResult();
+        
+        var response = await httpClient.PostAsJsonAsync<Models.Raffle>("participant/raffle", raffle);
+
+        if (response.StatusCode == HttpStatusCode.NoContent)
+        {
+            failure = new ErrorResult()
+            {
+                Errors = new Error()
+                {
+                    Password = new string[1] { "Nenhum participante a ser sorteado." }
+                }
+            };
+        }
+        else 
+        {
+            selected = response.IsSuccessStatusCode ? (await response.Content.ReadFromJsonAsync<Participant>()) : new Participant();
+            failure = !response.IsSuccessStatusCode ? (await response.Content.ReadFromJsonAsync<ErrorResult>()) : new ErrorResult();
+        }
+
+        displayLoaderStyle = "display: none;";
+        this.StateHasChanged();
+    }
+}
