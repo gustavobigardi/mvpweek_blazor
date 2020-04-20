@@ -3,7 +3,7 @@
 ### Aplicações web modernas utilizando C# com Blazor WASM
 Apresentação onde trago, além de conceitos, novidades do Blazor WebAssembly até a versão mais atual, 3.2-Preview3.
 * **Link da live: PENDENTE**
-* **Link dos slides: PENDENTE**
+* **Link dos slides: https://bit.ly/mvpweek-blazor**
 
 
 ### Informações gerais
